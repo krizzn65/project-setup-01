@@ -9,6 +9,7 @@
 | {{..}} | Masalah | {{kondisi "sebelum"}} |
 | {{..}} | Solusi + kenapa context graph | {{...}} |
 | {{..}} | Demo live | golden demo path (lihat §2) |
+| {{..}} | Reliabilitas | {{angka eval set + ambang/eskalasi; kalimat jembatan ke video Jev}} |
 | {{..}} | Dampak bisnis | {{metrik, ROI, model bisnis}} |
 | {{..}} | Kenapa kami / langkah berikutnya | {{can't/won't, roadmap}} |
 
@@ -45,6 +46,9 @@
 | Siapa yang bayar, berapa? | {{...}} | {{...}} |
 | Apa bedanya dengan Salesforce/Gainsight? | {{...}} | {{...}} |
 | Privasi & keamanan data pelanggan? | {{...}} | {{...}} |
+| Apa hubungannya dengan ide Jev (video panitia)? | {{AI dipanggil kode sebagai primitif kecil + confidence + ambang; graph = memori terstruktur}} | {{...}} |
+| Kenapa tidak satu model besar / chatbot saja? | {{banyak keputusan kecil lebih murah, cepat, dan bisa diukur; model besar hanya untuk kasus ragu}} | {{...}} |
+| Seberapa akurat, dan bagaimana kalian tahu? | {{angka eval set per primitif + uji robustness}} | {{...}} |
 
 ## 6. Kartu Contekan Bisnis
 > Untuk dibaca ulang sebelum pitch. Bahasa awam, tanpa jargon.
@@ -81,4 +85,8 @@
 | Preseden | Kasus serupa di masa lalu yang bisa jadi acuan keputusan sekarang |
 | RAG | Cara AI mencari potongan dokumen yang mirip lalu menjawab; tidak menelusuri hubungan |
 | Entity resolution | Mengenali bahwa beberapa nama berbeda adalah pihak yang sama |
+| Confidence / kalibrasi | Seberapa yakin AI; terkalibrasi berarti "70% yakin" memang benar ±70% dari waktu |
+| Ambang (threshold) | Batas yakin minimal sebelum hasil AI dipakai otomatis; di bawahnya dicek manusia |
+| Eval set | Kumpulan contoh dengan jawaban benar, dipakai untuk mengukur akurasi AI |
+| Primitif AI | Pertanyaan kecil ke AI dengan jawaban pasti: pilih satu, ya/tidak + yakin berapa, atau skor |
 | {{istilah lain dari study case}} | {{...}} |

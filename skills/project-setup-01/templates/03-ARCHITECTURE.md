@@ -22,6 +22,7 @@
 | Typecheck | `{{...}}` |
 | Lint | `{{...}}` |
 | Dead code | `{{mis. npx knip (JS/TS), vulture (Python)}}` |
+| Eval AI | `{{mis. python eval/run.py → akurasi per primitif}}` |
 | Golden demo path | {{langkah manual / script e2e}} |
 
 ## 3. Skema Context Graph
@@ -53,8 +54,25 @@
 4. **Tulis ke graph** dengan provenance + masa berlaku.
 **Cadangan:** seed data versi bersih yang langsung dimuat kalau ekstraksi bermasalah saat demo.
 
+## 4b. Peta Panggilan AI (lensa Jev)
+> LLM dipanggil oleh kode sebagai primitif kecil yang terkalibrasi, bukan satu prompt raksasa. Pola: `docs/JEV-LENS.md` §7–8.
+
+| Titik keputusan | Primitif | Input (JSON) | Output | Ambang: tulis / review / buang | Eskalasi |
+|---|---|---|---|---|---|
+| {{Kalimat berisi keputusan?}} | boolean + p | {{`{text, source_id}`}} | {{`{is_decision, p}`}} | {{≥0.85 / 0.5–0.85 / <0.5}} | {{model besar → manusia}} |
+| {{Tipe keputusan}} | choice | {{...}} | {{enum: diskon/eskalasi/renewal/…}} | {{...}} | {{...}} |
+| {{Dua entitas sama?}} | boolean + p | {{`{a, b}`}} | {{`{same, p}`}} | {{...}} | {{...}} |
+| {{Risiko churn / kemiripan preseden}} | score | {{...}} | {{0–1}} | {{...}} | {{...}} |
+
+- **Sumber probabilitas:** {{logprobs / mayoritas n sampel / self-report [kalibrasi belum diuji]}}
+- **Paralel & cache:** {{batas konkurensi; cache hasil untuk demo}}
+- **Ambang disimpan di:** {{file config / tabel pengaturan per tim}} — bukan di prompt
+- **Versi dikunci:** model `{{nama@versi}}`, prompt `{{v1}}`; dicatat di provenance (`extracted_by`)
+- **Eval set:** {{n}} contoh berlabel di `{{path}}`; target akurasi per primitif {{...}}; uji robustness: {{input diubah sedikit (urutan field, sinonim, nonce) → hasil sama}}
+- **Biaya & latensi:** {{panggilan, token, ms per dokumen; cascade model kecil → besar}}
+
 ## 5. Alur Sistem
-{{Pertanyaan user → traversal graph + pencarian preseden → LLM menyusun jawaban + jalur bukti + usulan aksi → user approve/tolak/ubah → keputusan ditulis balik sebagai Decision. Diagram mermaid boleh.}}
+{{Pertanyaan user → traversal graph + pencarian preseden → LLM menyusun jawaban + jalur bukti + usulan aksi dengan confidence (di bawah ambang → antrian review) → user approve/tolak/ubah → keputusan ditulis balik sebagai Decision. Diagram mermaid boleh.}}
 
 **Contoh query inti (multi-hop):** {{query yang menjadi bukti "kenapa graph"}}
 **Contoh query preseden:** {{"keputusan serupa untuk akun dengan kondisi mirip, siapa yang memutuskan, hasilnya apa"}}
@@ -76,7 +94,8 @@ Task 30–120 menit, punya pemilik & jam target.
 | Risiko | Cadangan |
 |---|---|
 | LLM/API lambat atau down saat demo | {{cache jawaban demo / video cadangan}} |
-| Ekstraksi/penyatuan entitas tidak akurat | {{seed data bersih + validasi skema JSON}} |
+| Ekstraksi/penyatuan entitas tidak akurat | {{seed data bersih + validasi skema JSON + ambang review}} |
+| Model/provider berubah perilaku di tengah lomba | {{versi dikunci + eval set dijalankan ulang sebelum demo}} |
 | {{...}} | {{...}} |
 
 ## 9. Q&A Keputusan

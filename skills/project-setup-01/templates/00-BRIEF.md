@@ -22,6 +22,11 @@
 - **Batasan:** {{...}}
 - **Ambigu / perlu ditanyakan:** {{...}}
 
+## 3b. Referensi Panitia
+- **Video Jev** (Diogo Almeida, TypeSafe — youtu.be/cFx9Z3ZXca0): {{3–5 poin paling relevan dengan study case, dari `docs/JEV-LENS.md`}}
+- **Akses Jev/TypeSafe disediakan?** {{ya / tidak / tanya panitia}}
+- {{Referensi lain dari panitia}}
+
 ## 4. Kriteria Penilaian
 | Kriteria | Bobot | Cara kita memenuhinya |
 |---|---|---|

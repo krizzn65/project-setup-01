@@ -11,13 +11,13 @@
 | 1 | Vision | {{...}} |
 | 2 | Segmen utama & JTBD | {{persona, pekerjaan, kendala; kenapa segmen ini dulu}} |
 | 3 | Value proposition | **Sebelum:** {{...}} → **Bagaimana:** {{...}} → **Sesudah:** {{hasil terukur}} |
-| 4 | Kenapa context graph | {{pertanyaan/aksi yang hanya mungkin lewat traversal graph}} |
+| 4 | Kenapa context graph | {{pertanyaan/aksi yang hanya mungkin lewat traversal graph; graph = memori terstruktur yang diisi & dibaca banyak panggilan AI kecil}} |
 | 5 | Alternatif & pembeda | {{kompetitor/cara lama dan kelemahannya}} |
 | 6 | Relative costs | {{biaya rendah / nilai unik}} |
 | 7 | Trade-off | {{yang sengaja tidak dikerjakan}} |
 | 8 | Key metrics | North Star: {{...}} · dibuktikan di demo: {{...}} |
 | 9 | Growth / GTM | {{PLG/SLG, channel, pembeli vs pengguna}} |
-| 10 | Capabilities | {{bangun sendiri vs partner/API}} |
+| 10 | Capabilities | {{bangun sendiri vs partner/API; LLM sebagai primitif (choice/boolean+p/score) dengan ambang yang diatur tim}} |
 | 11 | Can't/Won't | {{kenapa pemain besar tidak bisa/mau meniru}} |
 
 ## 3. Model Bisnis
