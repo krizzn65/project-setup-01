@@ -10,6 +10,8 @@ Skill Claude Code untuk **hari H hackathon, track "Context Graphs in Customer Su
 | `skills/project-setup/` | Dipakai untuk template 02-AGENT, 07-RULES, CLAUDE.md (juga bisa dipakai sendiri untuk projek non-hackathon) |
 | `skills/project-onboard/` | Dipakai untuk template AGENTS.md (supaya AI lain, mis. Cursor/Codex, ikut aturan yang sama) |
 | `skills/project-design/` | Dipakai untuk 08-DESIGN (format Google DESIGN.md spec), Prinsip UX, standar responsif, script ekstraksi warna/gaya |
+| `skills/always-on/` | Aturan yang selalu aktif untuk AI apa pun: kode paling sederhana (ponytail), kualitas UI (impeccable), output perintah hemat (rtk), gaya chat ringkas (caveman), peta kode (graphify, opsional) |
+| `AGENTS.md`, `CLAUDE.md` | Penunjuk untuk AI yang membuka repo ini: baca `always-on`, lalu `project-setup-01` untuk hackathon |
 
 `project-setup-01` merujuk ketiga skill lain lewat path `../project-setup`, `../project-onboard`, `../project-design`, jadi **keempatnya harus dipasang berdampingan**.
 
@@ -30,6 +32,17 @@ mkdir -p ~/.claude/skills && cp -R project-setup-01/skills/* ~/.claude/skills/
 ```
 
 Mulai sesi Claude Code baru, lalu ketik `/project-setup-01` (atau "hackathon", "study case").
+
+## Pakai di AI lain (mis. AI dari panitia)
+
+**AI coding agent yang membaca folder projek** (Codex, Cursor, Gemini CLI, Copilot, Windsurf, Antigravity, dll.):
+1. Clone repo ini, lalu salin isi `skills/` ke folder skill agent tersebut bila ia mendukung format `SKILL.md` (mis. `~/.agents/skills/`; cek dokumentasi agent-nya). Keempat folder `project-*` harus berdampingan.
+2. Atau, tanpa instalasi: buka/clone repo ini di workspace agent. Agent membaca `AGENTS.md` dan diarahkan ke `skills/always-on/` + `skills/project-setup-01/`. Kerjakan projek hackathon di folder baru di sebelahnya, lalu bilang: *"Ikuti skills/project-setup-01/SKILL.md, ini study case-nya: …"*.
+
+**AI chat tanpa akses file/terminal** (ChatGPT, Gemini, dll. di web):
+1. Tempel isi `skills/always-on/SKILL.md` sebagai custom instructions / instruksi pertama.
+2. Unggah `skills/project-setup-01/SKILL.md` + template yang dirujuknya (atau seluruh folder `skills/` sebagai Project/knowledge), lalu tempel study case.
+3. Langkah yang butuh terminal (lint/export desain, script ekstraksi warna, setup projek) dilewati; penyusunan semua docs tetap berjalan.
 
 ## Kebutuhan
 

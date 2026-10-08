@@ -11,6 +11,7 @@ Target: dari jawaban user sampai docs selesai **±15–20 menit**.
 
 ## Prinsip
 
+- **Berlaku untuk AI apa pun.** Ikuti juga `../always-on/SKILL.md` bila ada (aturan kode, UI, output perintah, gaya chat). Path `../<nama>/` berarti folder skill bernama itu yang berdampingan dengan folder ini. AI tanpa akses terminal melewati hanya langkah yang butuh shell (lint/export desain, script ekstraksi, setup projek) dan menyebutkannya.
 - **Pertanyaan seminimal mungkin, satu kali ACC.** Satu putaran pertanyaan dasar + (jika perlu) satu putaran pertanyaan bisnis berbasis study case. Jangan tanya per dokumen, jangan tanya per fase.
 - **User bukan orang bisnis.** AI menyusun seluruh strategi & model bisnis sendiri, dalam bahasa awam (istilah dijelaskan di kurung).
 - **Kritis tetap jalan, tapi di dalam kepala AI:** sebelum menulis, AI menguji drafnya sendiri (kontradiksi, klaim tanpa angka, segmen terlalu luas, graph cuma tempelan) lalu memperbaikinya. Yang tersisa dan butuh keputusan user masuk ke ringkasan akhir.
@@ -49,7 +50,7 @@ Aplikasi yang dibangun cepat dengan AI sering terlihat "buatan AI". Standar ini 
 
 ## Langkah 1 — Satu putaran pertanyaan
 
-Tanyakan sekaligus (pakai `AskUserQuestion` untuk yang berbentuk pilihan; teks ditempel di chat):
+Tanyakan sekaligus (pakai alat pertanyaan pilihan bila AI ini punya, mis. `AskUserQuestion`; kalau tidak, tulis pilihannya bernomor di chat; teks ditempel di chat):
 
 1. **Tempel study case lengkap** (beserta kriteria juri, deliverable, data/tools wajib, deadline — kalau ada di brief).
 2. **Pakai ide finalis?** Pakai penuh / Integrasikan dengan study case / Ide baru / Biar AI yang menilai. Kalau dipakai → tempel teks idenya.
@@ -103,7 +104,7 @@ Kerjakan tanpa bertanya lagi, berurutan:
 9. **`docs/06-WORKFLOW.md`** (`templates/06-WORKFLOW.md`).
 10. **`docs/07-RULES.md`** (`../project-setup/templates/07-RULES.md`) — tidak dilemahkan; isi perintah verifikasi + "cek golden demo path". Di checklist UI §8 tambahkan: "Lulus Standar UI A1–A8 di bagian Do's and Don'ts 08-DESIGN (tanpa emoji, tanpa warna bawaan AI, satu layar satu tugas, tanpa elemen tanpa fungsi)". Masukkan baris "UI: Standar UI A1–A8" ke tabel laporan akhir.
 11. **`CLAUDE.md`** (`../project-setup/templates/CLAUDE.md`) dan **`AGENTS.md`** (`../project-onboard/templates/AGENTS.md`) — tambahkan: study case di 00-BRIEF, pitch di 05-PITCH, UI wajib ikut 08-DESIGN termasuk Standar UI anti tampilan AI (tanpa emoji, palet dari token, satu layar satu tugas).
-12. Simpan memori `project`: hackathon, track, ide final, deadline, lokasi docs.
+12. Jika AI ini punya fitur memori, simpan satu catatan projek: hackathon, track, ide final, deadline, lokasi docs. Kalau tidak, `CLAUDE.md`/`AGENTS.md` sudah cukup sebagai pengingat.
 
 ## Langkah 3 — Ringkasan & satu ACC
 
@@ -136,7 +137,7 @@ Pakai skill `logo-design` jalur cepat (kalau skill itu tidak terpasang, katakan 
 
 ## Langkah 4 — Tawaran terakhir: bantu setup projek?
 
-Tanya (pakai `AskUserQuestion`): **"Docs sudah lengkap. Mau aku bantu setup projeknya sekarang (install backend, frontend, database, dan tools sesuai 03-ARCHITECTURE), atau setup sendiri?"**
+Tanya (alat pertanyaan pilihan bila ada, kalau tidak di chat): **"Docs sudah lengkap. Mau aku bantu setup projeknya sekarang (install backend, frontend, database, dan tools sesuai 03-ARCHITECTURE), atau setup sendiri?"**
 
 **Setup sendiri** → tulis daftar perintah setup lengkap (urut, sesuai stack) di `docs/03-ARCHITECTURE.md` §2 dan tampilkan di chat. Lalu selesai: "Silakan build. Panggil aku lagi kalau ada info baru dari panitia."
 
