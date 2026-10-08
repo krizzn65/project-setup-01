@@ -21,7 +21,7 @@
 | Build | `{{...}}` |
 | Typecheck | `{{...}}` |
 | Lint | `{{...}}` |
-| Dead code | `{{...}}` |
+| Dead code | `{{mis. npx knip (JS/TS), vulture (Python)}}` |
 | Golden demo path | {{langkah manual / script e2e}} |
 
 ## 3. Skema Context Graph

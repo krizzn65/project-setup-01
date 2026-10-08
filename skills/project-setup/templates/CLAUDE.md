@@ -22,6 +22,8 @@
 ## Kapan baca docs
 - Mulai task baru → bagian task terkait di `docs/03-ARCHITECTURE.md`
 - Status task berubah → update `docs/04-TODO.md` (wajib)
-- Butuh pola testing/review/refactor → `docs/05-SKILL.md`
+- Butuh pola testing/review/refactor → `docs/05-SKILL.md` (jika ada)
+- Pitch & script demo (projek hackathon) → `docs/05-PITCH.md`
+- Aturan kerja always-on → `docs/ALWAYS-ON.md` (jika ada)
 - Ragu soal scope fitur → `docs/01-PRD.md`
 - Detail konvensi koding → `docs/02-AGENT.md`

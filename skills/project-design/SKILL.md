@@ -20,7 +20,7 @@ Komunikasi pakai bahasa user (default Bahasa Indonesia). Ikuti `docs/07-RULES.md
 `08-DESIGN.md` mengikuti [spec resmi Google](https://github.com/google-labs-code/design.md) (status alpha):
 - **YAML front matter** = token resmi (`colors`, `typography`, `rounded`, `spacing`, `components`). Nilai ditulis **sekali** di sini; kode dihasilkan lewat `export`, tidak ditulis ulang.
 - **Markdown** = alasan dan cara pakai, urutan bagian baku: Overview, Colors, Typography, Layout, Elevation & Depth, Shapes, Components, Do's and Don'ts. Bagian tambahan (Deviations from Reference, Implementation, Changelog) ditaruh setelahnya.
-- **CLI tanpa LLM (0 token):** di Windows pakai alias `designmd`:
+- **CLI tanpa LLM (0 token, butuh internet saat pertama dijalankan):** pakai alias `designmd` (berfungsi di semua OS, wajib di Windows):
   - `npx -p @google/design.md designmd lint docs/08-DESIGN.md` → wajib **0 error dan 0 warning `contrast-ratio`**.
   - `npx -p @google/design.md designmd export --format css-tailwind|json-tailwind|dtcg docs/08-DESIGN.md` → theme untuk kode.
   - `npx -p @google/design.md designmd diff lama.md baru.md` → cek regresi setelah token diubah.
@@ -59,14 +59,14 @@ Aturan pasti, bukan saran. Tulis ke bagian "Layout" 08-DESIGN dan uji di setiap 
 
 ## Langkah 1 — Pahami docs
 
-- Kalau projek belum di-onboard (tidak ada ringkasan di `CLAUDE.md`/`AGENTS.md`), baca `docs/01`–`07` penuh dulu (seperti skill `project-onboard`).
+- Kalau projek belum di-onboard (tidak ada ringkasan di `CLAUDE.md`/`AGENTS.md`), baca semua file di `docs/` (00–08 yang ada) penuh dulu (seperti skill `project-onboard`).
 - Kalau sudah, cukup baca: `01-PRD` (persona, platform, fitur → daftar layar), `02-AGENT` (struktur folder, bahasa UI), `03-ARCHITECTURE` (framework UI, styling: Tailwind/CSS Modules/shadcn/dll.).
 - Susun **daftar layar & komponen** yang dibutuhkan dari fitur MVP. Ini yang nanti wajib dicakup DESIGN.md.
-- Kalau `docs/` tidak ada, tawarkan `/project-setup` dulu. Kalau user tetap mau lanjut, tanya konteks minimal (aplikasi apa, untuk siapa, platform, stack UI).
+- Kalau `docs/` tidak ada, tawarkan skill `project-setup` dulu. Kalau user tetap mau lanjut, tanya konteks minimal (aplikasi apa, untuk siapa, platform, stack UI).
 
 ## Langkah 2 — Minta referensi
 
-Tanya dalam satu putaran (pakai `AskUserQuestion` untuk bagian pilihan):
+Tanya dalam satu putaran (pakai alat pertanyaan pilihan bila ada, mis. `AskUserQuestion`; kalau tidak, pilihan bernomor di chat):
 1. **Referensi** (1–5, makin banyak makin akurat): screenshot/gambar (tempel atau path file), URL website/app, link Figma, Dribbble/Behance. **Tidak punya referensi?** Tawarkan DESIGN.md siap pakai dari katalog yang mengikuti spec Google (mis. getdesign.md, designmd.co) sesuai jenis produk — tetap verifikasi nilainya di website aslinya, dan ambil hanya token serta bagian yang relevan, jangan salin seluruh file.
 2. **Dari tiap referensi mau ambil apa?** warna · tipografi · layout · bentuk komponen · ilustrasi/ikon · "feel" keseluruhan. Ini penting kalau referensinya lebih dari satu.
 3. **Aset brand yang sudah ada:** logo, warna brand, font berlisensi.

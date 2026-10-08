@@ -11,7 +11,7 @@ Target: dari jawaban user sampai docs selesai **±15–20 menit**.
 
 ## Prinsip
 
-- **Berlaku untuk AI apa pun.** Ikuti juga `../always-on/SKILL.md` bila ada (aturan kode, UI, output perintah, gaya chat). Path `../<nama>/` berarti folder skill bernama itu yang berdampingan dengan folder ini. AI tanpa akses terminal melewati hanya langkah yang butuh shell (lint/export desain, script ekstraksi, setup projek) dan menyebutkannya.
+- **Berlaku untuk AI apa pun.** Ikuti juga `../always-on/SKILL.md` bila ada (aturan kode, UI, output perintah, gaya chat). Path `../<nama>/` berarti folder skill bernama itu yang berdampingan dengan folder ini. AI tanpa akses terminal atau browser melewati hanya langkah yang membutuhkannya — shell: lint/export desain, `extract_colors.py`, script logo, setup projek; browser: `extract_styles.js`, screenshot dan cek visual UI — lalu menyebutkannya dengan jujur (07-RULES §5).
 - **Pertanyaan seminimal mungkin, satu kali ACC.** Satu putaran pertanyaan dasar + (jika perlu) satu putaran pertanyaan bisnis berbasis study case. Jangan tanya per dokumen, jangan tanya per fase.
 - **User bukan orang bisnis.** AI menyusun seluruh strategi & model bisnis sendiri, dalam bahasa awam (istilah dijelaskan di kurung).
 - **Kritis tetap jalan, tapi di dalam kepala AI:** sebelum menulis, AI menguji drafnya sendiri (kontradiksi, klaim tanpa angka, segmen terlalu luas, graph cuma tempelan) lalu memperbaikinya. Yang tersisa dan butuh keputusan user masuk ke ringkasan akhir.
@@ -70,7 +70,7 @@ Setelah membaca study case, AI boleh menanyakan **3–5 pertanyaan bisnis** kala
 
 ## Langkah 2 — AI menyusun semua docs sekaligus
 
-Kerjakan tanpa bertanya lagi, berurutan:
+Kerjakan tanpa bertanya lagi, berurutan. Baris status di docs (mis. "✅ ACC") ditulis dulu sebagai "Draf — menunggu ACC" dan baru diubah setelah ACC di Langkah 3.
 
 1. **`docs/00-BRIEF.md`** (`templates/00-BRIEF.md`) — study case **verbatim**, ringkasan, kriteria juri, keputusan ide, hal yang perlu ditanyakan ke panitia.
 2. **Keputusan ide** (kalau user pilih "biar AI menilai" atau "integrasi") — nilai kecocokan ide finalis vs study case (relevansi, graph esensial, kriteria juri, bisa didemokan, nilai bisnis); putuskan Pakai / Integrasi / Pivot. Saat aturan panitia belum jelas, utamakan **Integrasi** (inti ide lama dibingkai sebagai solusi study case).
@@ -98,13 +98,14 @@ Kerjakan tanpa bertanya lagi, berurutan:
    - Isi baris **Ikon** di bagian "Shapes" 08-DESIGN dengan library ikon yang dipilih di 03-ARCHITECTURE (bukan emoji).
    - Jalankan `npx -p @google/design.md designmd lint docs/08-DESIGN.md` → wajib 0 error dan tanpa warning `contrast-ratio` (0 token, tanpa LLM).
    - Terapkan **Standar responsif** dari `../project-design/SKILL.md` dan tulis di bagian "Layout": mobile < 768px = burger 44×44 + drawer, tablet 768–1199px, desktop ≥ 1200px; aturan drawer (scrim, Esc, fokus masuk-terkunci-kembali, scroll terkunci); target sentuh ≥ 44px di bawah 1200px.
-   - Catat di ringkasan bahwa preview & penyamaan ≥95% bisa dijalankan nanti lewat `/project-design` kalau ada waktu.
+   - Di baris Status 08-DESIGN tulis "Draf — menunggu ACC" dan "Kemiripan referensi: belum diukur (tanpa preview)"; isi Changelog dengan "Dokumen awal (hackathon), kemiripan belum diukur". Analisis referensi cukup di bagian Overview (folder `docs/design/refs/` tidak wajib). Catat di ringkasan bahwa preview & penyamaan ≥95% bisa dijalankan nanti lewat skill `project-design` kalau ada waktu.
 7. **`docs/05-PITCH.md`** (`templates/05-PITCH.md`) — alur cerita, script demo, outline deck, pemetaan kriteria juri, Q&A, dan **Kartu Contekan Bisnis** (bahasa awam + kamus istilah).
 8. **`docs/02-AGENT.md`** (`../project-setup/templates/02-AGENT.md`) — konvensi minimum sesuai stack.
 9. **`docs/06-WORKFLOW.md`** (`templates/06-WORKFLOW.md`).
 10. **`docs/07-RULES.md`** (`../project-setup/templates/07-RULES.md`) — tidak dilemahkan; isi perintah verifikasi + "cek golden demo path". Di checklist UI §8 tambahkan: "Lulus Standar UI A1–A8 di bagian Do's and Don'ts 08-DESIGN (tanpa emoji, tanpa warna bawaan AI, satu layar satu tugas, tanpa elemen tanpa fungsi)". Masukkan baris "UI: Standar UI A1–A8" ke tabel laporan akhir.
-11. **`CLAUDE.md`** (`../project-setup/templates/CLAUDE.md`) dan **`AGENTS.md`** (`../project-onboard/templates/AGENTS.md`) — tambahkan: study case di 00-BRIEF, pitch di 05-PITCH, UI wajib ikut 08-DESIGN termasuk Standar UI anti tampilan AI (tanpa emoji, palet dari token, satu layar satu tugas).
-12. Jika AI ini punya fitur memori, simpan satu catatan projek: hackathon, track, ide final, deadline, lokasi docs. Kalau tidak, `CLAUDE.md`/`AGENTS.md` sudah cukup sebagai pengingat.
+11. **`CLAUDE.md`** (`../project-setup/templates/CLAUDE.md`) dan **`AGENTS.md`** (`../project-onboard/templates/AGENTS.md`) — hapus baris rujukan `05-SKILL` (projek hackathon tidak punya file itu; baris 05-PITCH sudah ada di template); ubah baris "Dibuat oleh skill project-setup" menjadi "project-setup-01"; tambahkan: study case di 00-BRIEF, UI wajib ikut 08-DESIGN termasuk Standar UI anti tampilan AI (tanpa emoji, palet dari token, satu layar satu tugas).
+12. Jika `../always-on/SKILL.md` ada (dipakai saat skill ini berjalan di AI selain Claude Code yang terpasang skill aslinya), salin isinya ke `docs/ALWAYS-ON.md` supaya aturan itu ikut pindah ke folder projek; baris rujukannya sudah ada di template CLAUDE.md/AGENTS.md.
+13. Jika AI ini punya fitur memori, simpan satu catatan projek: hackathon, track, ide final, deadline, lokasi docs. Kalau tidak, `CLAUDE.md`/`AGENTS.md` sudah cukup sebagai pengingat.
 
 ## Langkah 3 — Ringkasan & satu ACC
 
@@ -125,6 +126,7 @@ Tampilkan **satu layar**, bahasa awam:
 ACC, atau ada yang mau diubah?
 ```
 - Ada koreksi → ubah hanya bagian itu + dokumen yang terdampak, tampilkan ringkasan perubahan, minta ACC lagi.
+- Setelah ACC: ubah status draf menjadi "✅ ACC {{tanggal}}" di semua docs yang punya baris status (01-PRD, 08-DESIGN).
 - ACC + logo "ya" → Langkah 3b. ACC + logo "nanti/tidak" → Langkah 4.
 
 ## Langkah 3b — Logo (hanya jika user bilang "ya")

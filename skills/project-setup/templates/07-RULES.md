@@ -57,7 +57,7 @@ Berlaku untuk setiap kerja tampilan: halaman, komponen, layout, warna, tipografi
   - Responsif di 375px, 768px, dan 1440px tanpa scroll horizontal.
   - Kontras teks ≥ 4.5:1 (teks besar & elemen UI ≥ 3:1).
   - Semua aksi bisa lewat keyboard, focus terlihat jelas.
-  - Target sentuh ≥ 44×44px di mobile.
+  - Target sentuh ≥ 44×44px di bawah 1200px (≥ 36px di desktop); body text ≥ 16px di mobile.
   - State lengkap: hover, active, focus, disabled, loading, empty, error.
   - Input punya label; ikon tanpa teks punya `aria-label`.
   - Konsisten dengan komponen lain yang sudah ada.
@@ -69,7 +69,7 @@ Berlaku untuk setiap kerja tampilan: halaman, komponen, layout, warna, tipografi
 - Kalau `rtk` (Rust Token Killer) terpasang, jalankan perintah yang outputnya panjang (git, package manager, test runner, build, lint, docker, ls/grep di folder besar) lewat `rtk` agar output ringkas tanpa kehilangan sinyal penting.
 - Kalau tidak terpasang, pakai flag ringkas bawaan tool (mis. `--silent`, `--quiet`, reporter ringkas) dan batasi output dengan filter, tanpa menyembunyikan error.
 - Gabungkan perintah yang saling terkait dalam satu kali jalan.
-- Kalau output ringkas tidak bisa dipakai (kosong padahal seharusnya ada isi, bertentangan dengan exit code, atau rusak), jalankan ulang tanpa peringkas (`rtk proxy <cmd>`). Jangan menebak hasil dari output yang terpotong.
+- Kalau output ringkas tidak bisa dipakai (kosong padahal seharusnya ada isi, bertentangan dengan exit code, atau rusak), jalankan ulang tanpa peringkas (`rtk proxy <cmd>` bila rtk terpasang, atau perintah aslinya). Jangan menebak hasil dari output yang terpotong.
 
 ## 10. Laporan Akhir (wajib setelah setiap pekerjaan)
 ```

@@ -1,6 +1,6 @@
 # 00 — BRIEF: {{Nama Hackathon}} · Track Context Graphs in Customer Success & Sales
 
-> Sumber kebenaran untuk aturan & study case. Kalau ada konflik dengan dokumen lain, dokumen ini menang (kecuali 07-RULES untuk cara kerja).
+> Sumber kebenaran untuk aturan lomba & study case. Prioritas: 07-RULES > instruksi user > dokumen ini > dokumen lain.
 
 ## 1. Info Lomba
 | Item | Isi |
@@ -35,7 +35,7 @@
 ## 6. Keputusan Ide
 - **Ide finalis:** {{ringkasan}}
 - **Keputusan:** {{Pakai / Integrasi / Pivot}}
-- **Skor kecocokan:** {{tabel H2}}
+- **Skor kecocokan:** {{tabel: relevansi, graph esensial, kriteria juri, bisa didemokan, nilai bisnis — skor 0–5 + catatan}}
 - **Alasan:** {{...}}
 
 ## 7. Klarifikasi Panitia/Mentor

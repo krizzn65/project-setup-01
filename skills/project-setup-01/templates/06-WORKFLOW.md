@@ -33,4 +33,4 @@
 - [ ] 04-TODO diupdate, laporan diberikan
 
 ## 6. Prioritas Saat Konflik
-07-RULES > 00-BRIEF > 01-PRD > 06-WORKFLOW > 03-ARCHITECTURE > 02-AGENT
+07-RULES > instruksi user > 00-BRIEF > 01-PRD > 08-DESIGN (untuk UI) > 06-WORKFLOW > 03-ARCHITECTURE > 02-AGENT

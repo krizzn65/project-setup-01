@@ -36,7 +36,7 @@ typography:
     lineHeight: 1.3
   body-md:
     fontFamily: "{{Font}}"
-    fontSize: "{{15px}}"
+    fontSize: "{{16px}}"
     fontWeight: 400
     lineHeight: 1.6
   body-sm:
@@ -126,13 +126,13 @@ components:
 # {{Nama Aplikasi}} — Design System
 
 > Sumber kebenaran untuk semua kerja UI. Format: [Google DESIGN.md spec](https://github.com/google-labs-code/design.md) (alpha). Token di YAML di atas adalah nilai resmi; jangan pakai warna, ukuran, radius, atau shadow di luar token.
-> Status: ✅ ACC {{tanggal}} · Kemiripan referensi {{xx}}% · Lint: {{0 error, n warning}}
+> Status: ✅ ACC {{tanggal}} · Kemiripan referensi {{xx% / belum diukur}} · Lint: {{0 error, n warning}}
 
 ## Overview
 
 {{2–4 kalimat: nuansa (3–5 kata sifat), untuk siapa (persona PRD), kesan yang ingin ditimbulkan, padat atau lapang.}}
 
-- **Referensi:** {{R1: URL/gambar/Figma/katalog — diambil: warna, tipografi, ...}} (analisis mentah di `docs/design/refs/`)
+- **Referensi:** {{R1: URL/gambar/Figma/katalog — diambil: warna, tipografi, ...}} (analisis mentah di `docs/design/refs/` bila dibuat)
 - **Dihindari:** {{...}}
 - **Mode:** {{light / dark / keduanya}}. {{Jika dark: token dark ditulis dengan awalan `dark-`, mis. `dark-neutral`.}}
 
@@ -217,7 +217,7 @@ components:
 | 9 | Aksi utama paling jelas tapi tidak agresif | {{...}} |
 
 **Aksesibilitas**
-- Do: kontras teks ≥ 4.5:1, teks besar/elemen UI ≥ 3:1 (dicek `lint`); focus selalu terlihat; semua aksi bisa lewat keyboard; target sentuh ≥ 44×44px; label untuk setiap input; `aria-label` untuk ikon tanpa teks.
+- Do: kontras teks ≥ 4.5:1, teks besar/elemen UI ≥ 3:1 (dicek `lint`); focus selalu terlihat; semua aksi bisa lewat keyboard; target sentuh ≥ 44×44px di bawah 1200px (≥ 36px di desktop); label untuk setiap input; `aria-label` untuk ikon tanpa teks.
 - Don't: menyampaikan informasi hanya lewat warna.
 
 **Checklist review UI**
@@ -225,7 +225,7 @@ components:
 - [ ] Semua state komponen ada (hover, focus, disabled, loading, empty, error)
 - [ ] Responsif di 375px, 768px, 1440px tanpa scroll horizontal
 - [ ] Lulus Prinsip UX 1–9, diuji dengan konten ekstrem (teks panjang, data kosong, gambar terang/gelap)
-- [ ] `lint` 0 error
+- [ ] `lint` 0 error dan tanpa warning `contrast-ratio`
 
 ## Deviations from Reference
 
@@ -248,4 +248,4 @@ Format lain: `json-tailwind` (Tailwind v3), `dtcg` (W3C tokens). Setelah menguba
 
 | Tanggal | Perubahan |
 |---|---|
-| {{tanggal}} | Dokumen awal, kemiripan {{xx}}% |
+| {{tanggal}} | Dokumen awal, kemiripan {{xx% / belum diukur}} |

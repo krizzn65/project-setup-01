@@ -47,7 +47,8 @@ Mulai sesi Claude Code baru, lalu ketik `/project-setup-01` (atau "hackathon", "
 ## Kebutuhan
 
 Wajib:
-- Claude Code
+- Claude Code, atau AI agent lain yang bisa membaca file (lihat bagian "Pakai di AI lain"); AI chat tanpa akses file juga bisa dengan menempel isinya
+- Koneksi internet (npx `@google/design.md`, Google Fonts, katalog DESIGN.md bila dipakai)
 - Node.js 18+ (untuk `npx -p @google/design.md designmd lint|export` — cek kontras dan export token desain)
 - Python 3 + Pillow (`pip install pillow`) untuk `extract_colors.py` bila referensi desain berupa gambar
 

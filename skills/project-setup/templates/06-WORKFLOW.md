@@ -43,4 +43,4 @@ Sebuah fitur/task dianggap **selesai** hanya jika:
 ## 6. Saat Ragu atau Buntu
 - Ambiguitas requirement → tanya user, catat jawabannya di 03-ARCHITECTURE (Q&A).
 - Gagal memperbaiki error setelah beberapa pendekatan berbeda → berhenti, jelaskan apa yang sudah dicoba dan dugaan penyebabnya, minta arahan.
-- Konflik antar dokumen → urutan prioritas: 07-RULES > 01-PRD > 06-WORKFLOW > 03-ARCHITECTURE > 02-AGENT.
+- Konflik antar dokumen → urutan prioritas: 07-RULES > instruksi user > 00-BRIEF (jika ada) > 01-PRD > 08-DESIGN (untuk UI) > 06-WORKFLOW > 03-ARCHITECTURE > 02-AGENT.

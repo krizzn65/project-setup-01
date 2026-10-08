@@ -1,6 +1,6 @@
 ---
 name: project-onboard
-description: Baca dan pahami seluruh dokumen projek (docs/01-PRD sampai docs/07-RULES hasil skill project-setup) dalam sekali jalan, lalu simpan pemahamannya supaya sesi berikutnya tidak perlu baca ulang. Pakai saat user bilang "pahami projek ini", "baca docs", "onboard", "lanjutin projek", "aku pindah AI", "/project-onboard", atau saat mulai sesi baru di projek yang punya folder docs/ berisi 01-PRD.md dan belum ada pemahaman tersimpan.
+description: Baca dan pahami seluruh dokumen projek (docs/00 sampai docs/08 hasil skill project-setup atau project-setup-01) dalam sekali jalan, lalu simpan pemahamannya supaya sesi berikutnya tidak perlu baca ulang. Pakai saat user bilang "pahami projek ini", "baca docs", "onboard", "lanjutin projek", "aku pindah AI", "/project-onboard", atau saat mulai sesi baru di projek yang punya folder docs/ berisi 01-PRD.md dan belum ada pemahaman tersimpan.
 ---
 
 # Project Onboard
@@ -11,8 +11,8 @@ Komunikasi pakai bahasa user (default Bahasa Indonesia).
 
 ## Langkah 1 — Cek dokumen
 
-Cari `docs/01-PRD.md` sampai `docs/07-RULES.md` di root projek.
-- Tidak ada `docs/` sama sekali → bilang ke user dan tawarkan `/project-setup`. Berhenti.
+Cari semua file `docs/00-*.md` sampai `docs/08-*.md` di root projek (projek hackathon memakai 00-BRIEF dan 05-PITCH; projek biasa memakai 05-SKILL).
+- Tidak ada `docs/` sama sekali → bilang ke user dan tawarkan skill `project-setup` (atau `project-setup-01` untuk hackathon). Berhenti.
 - Ada sebagian → lanjut, tapi catat dokumen mana yang hilang untuk dilaporkan.
 
 ## Langkah 2 — Baca semua, berurutan, sampai habis
@@ -83,4 +83,4 @@ Kalau ada pertanyaan terbuka di 03-ARCHITECTURE yang menghalangi task berikutnya
 
 - Jangan membaca ulang seluruh docs di sesi yang sama atau sesi berikutnya; `CLAUDE.md`/`AGENTS.md` sudah memuat yang penting.
 - Baca ulang dokumen tertentu hanya jika: mulai task baru (bagian terkait di 03), update progres (04, wajib), user bilang docs berubah, atau ada konflik aturan.
-- Urutan prioritas jika konflik: 07-RULES > 01-PRD > 06-WORKFLOW > 03-ARCHITECTURE > 02-AGENT.
+- Urutan prioritas jika konflik: 07-RULES > instruksi user > 00-BRIEF (jika ada) > 01-PRD > 08-DESIGN (untuk UI) > 06-WORKFLOW > 03-ARCHITECTURE > 02-AGENT.

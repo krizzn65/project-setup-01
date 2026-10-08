@@ -18,7 +18,7 @@ Semua komunikasi pakai bahasa user (default Bahasa Indonesia, santai tapi jelas)
 ## Aturan umum sesi tanya-jawab
 
 - Tanya **sebelum** menulis tiap dokumen. Jangan pernah bikin dokumen dari asumsi diam-diam.
-- Maksimal 3–5 pertanyaan per putaran. Pakai `AskUserQuestion` kalau jawabannya bisa berupa pilihan; pertanyaan terbuka tanya biasa.
+- Maksimal 3–5 pertanyaan per putaran. Pakai alat pertanyaan pilihan bila ada (mis. `AskUserQuestion`), kalau tidak tulis pilihan bernomor di chat; pertanyaan terbuka tanya biasa.
 - Kalau user jawab "terserah"/"belum tahu", **kasih rekomendasi + alasannya**, lalu minta konfirmasi.
 - Tunjukkan ringkasan/draf, lalu minta ACC eksplisit ("ACC", "oke", "lanjut"). Belum ACC = revisi, ulangi.
 - Dokumen ditulis berurutan. Dokumen berikutnya wajib konsisten dengan dokumen sebelumnya yang sudah di-ACC.
@@ -69,7 +69,7 @@ Untuk tiap dokumen: tanya singkat → tulis → tunjukkan poin pentingnya → la
    - Ringkasan konvensi dari 02-AGENT
    - Pointer ke dokumen lain untuk dibaca **hanya saat relevan** (03 saat mulai task baru, 04 untuk update progres, 05 saat butuh pola prompt)
 3. Buat juga `AGENTS.md` di root dari `../project-onboard/templates/AGENTS.md` (dibaca Codex, Cursor, Copilot, Gemini CLI, dll.), supaya kalau user pindah AI, AI lain langsung tahu harus baca docs/ dan mengikuti rules.
-4. Simpan juga satu memori `project` (lewat sistem memori) berisi: nama aplikasi, tujuan, stack, dan "aturan ada di docs/07-RULES.md, onboarding sudah dilakukan tanggal X". Jangan duplikasi isi docs ke memori.
+4. Jika AI ini punya fitur memori, simpan juga satu memori `project` berisi: nama aplikasi, tujuan, stack, dan "aturan ada di docs/07-RULES.md, onboarding sudah dilakukan tanggal X". Jangan duplikasi isi docs ke memori.
 5. Laporkan ke user: dokumen yang dibuat, ringkasan aplikasi, task pertama dari 04-TODO, dan tanya "Mulai dari task {{ID}}?"
 
 ## Setelah setup

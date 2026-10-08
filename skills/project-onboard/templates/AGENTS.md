@@ -4,7 +4,7 @@
 > Sumber kebenaran ada di `docs/`. File ini ringkasannya.
 
 ## WAJIB sebelum ngoding pertama kali
-Jika kamu AI yang belum pernah bekerja di projek ini, baca **seluruh** `docs/01-PRD.md` sampai `docs/07-RULES.md` secara berurutan satu kali, lalu ikuti aturannya. Setelah itu cukup rujuk file ini.
+Jika kamu AI yang belum pernah bekerja di projek ini, baca **seluruh** file di `docs/` (00 sampai 08, yang ada) secara berurutan satu kali, lalu ikuti aturannya. Setelah itu cukup rujuk file ini.
 
 ## Aplikasi
 {{3–5 baris: apa, untuk siapa, masalah, fitur MVP, di luar scope.}}
@@ -36,6 +36,8 @@ Jika kamu AI yang belum pernah bekerja di projek ini, baca **seluruh** `docs/01-
 ## Kapan baca docs
 - Mulai task baru → bagian terkait di `docs/03-ARCHITECTURE.md`
 - Status task berubah → update `docs/04-TODO.md` (wajib)
-- Pola testing/review/refactor → `docs/05-SKILL.md`
+- Pola testing/review/refactor → `docs/05-SKILL.md` (jika ada)
+- Pitch & script demo (projek hackathon) → `docs/05-PITCH.md`
+- Aturan kerja always-on (kode, UI, output perintah, gaya chat) → `docs/ALWAYS-ON.md` (jika ada) — wajib diikuti setiap respons
 - Ragu scope → `docs/01-PRD.md`
-- Konflik aturan → prioritas: 07-RULES > 01-PRD > 06-WORKFLOW > 03-ARCHITECTURE > 02-AGENT
+- Konflik aturan → prioritas: 07-RULES > instruksi user > 00-BRIEF (jika ada) > 01-PRD > 08-DESIGN (untuk UI) > 06-WORKFLOW > 03-ARCHITECTURE > 02-AGENT

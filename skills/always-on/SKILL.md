@@ -7,7 +7,7 @@ description: Aturan kerja yang SELALU aktif di setiap respons, untuk AI apa pun 
 
 Berlaku untuk **setiap respons**, sampai user bilang sebaliknya. Tidak perlu dipanggil. Kalau AI ini tidak mendukung skill, tempel file ini sebagai instruksi sistem/custom instructions di awal sesi.
 
-Urutan prioritas bila bertabrakan: **aturan projek (`docs/07-RULES.md`) > instruksi user > file ini.**
+Urutan prioritas bila bertabrakan: **`docs/07-RULES.md` > instruksi user > docs projek lain (00-BRIEF > 01-PRD > 08-DESIGN untuk UI > 06-WORKFLOW > 03-ARCHITECTURE > 02-AGENT) > file ini.**
 
 ---
 
@@ -50,11 +50,13 @@ Berlaku untuk halaman, komponen, layout, warna, tipografi, aksesibilitas, respon
 - Detail browser ikut dirancang: warna seleksi teks, caret, scrollbar, focus ring, underline offset, angka tabular.
 - Copy memakai bahasa produk; tombol menyebut aksinya; error menyebut masalah dan cara memulihkan.
 
-**Tolak sebagai default (boleh hanya bila brief memintanya):** kartu seragam ikon+judul+teks sebagai struktur halaman; kartu bersarang; template angka-besar+label kecil; label kecil di atas heading (eyebrow — selalu dilarang); nomor section 01/02/03 tanpa makna; modal yang tidak perlu; teks gradasi; glass/blur dekoratif; border-left berwarna > 1px pada kartu/alert; bayangan keras tanpa blur; monospace sebagai kostum "teknis"; emoji atau glyph unicode sebagai ikon (pakai satu library ikon, satu ketebalan); masker geometris pengganti potongan foto.
+**Selalu dilarang:** label kecil (eyebrow) di atas heading — heading berdiri sendiri. Label kecil kapital pada badge, chip, tag, atau nama kolom tetap boleh.
 
-**Verifikasi terbatas:** bangun penuh → satu ronde screenshot desktop + mobile → perbaiki semua sekaligus → maksimal satu ronde konfirmasi. Jangan polishing tanpa akhir.
+**Tolak sebagai default (boleh hanya bila brief memintanya):** kartu seragam ikon+judul+teks sebagai struktur halaman; kartu bersarang; template angka-besar+label kecil; nomor section 01/02/03 tanpa makna; modal yang tidak perlu; teks gradasi; glass/blur dekoratif; border-left berwarna > 1px pada kartu/alert; bayangan keras tanpa blur; monospace sebagai kostum "teknis"; emoji atau glyph unicode sebagai ikon (pakai satu library ikon, satu ketebalan); masker geometris pengganti potongan foto.
 
-**Responsif standar:** mobile < 768px pakai burger 44×44 + drawer (scrim, Esc, fokus masuk-terkunci-kembali, scroll terkunci); tablet 768–1199px; desktop ≥ 1200px navigasi penuh. Target sentuh ≥ 44px di bawah 1200px. Tanpa scroll horizontal di 360px.
+**Verifikasi terbatas:** bangun penuh → satu ronde screenshot 375, 768, dan 1440 px → perbaiki semua sekaligus → maksimal satu ronde konfirmasi. Jangan polishing mandiri tanpa akhir; revisi yang diminta user tetap dilayani sampai user ACC.
+
+**Responsif standar:** mobile < 768px pakai burger 44×44 + drawer (scrim, Esc, fokus masuk-terkunci-kembali, scroll terkunci); tablet 768–1199px; desktop ≥ 1200px navigasi penuh. Target sentuh ≥ 44px di bawah 1200px, ≥ 36px di desktop. Body text ≥ 16px di mobile. Tanpa scroll horizontal di 360px.
 
 ## 3. Output perintah hemat (dari *rtk*)
 
@@ -79,7 +81,7 @@ Hanya untuk teks balasan chat. Kode, komentar, commit, docs, PR tetap memakai pr
 
 - Projek punya `graphify-out/graph.json`: jalankan `graphify query "<pertanyaan>"` (atau `explain`, `path`, `affected`) sebelum grep/membaca file, lalu baca hanya file yang ditunjuk. Setelah mengubah kode: `graphify update .`.
 - Projek besar (±100+ file kode) tanpa graph: `graphify extract . --code-only` (lokal, tanpa token).
-- Projek kecil/baru (termasuk hackathon): lewati, baca file langsung.
+- Projek kecil/baru (termasuk hackathon), atau graphify tidak terpasang: cari dengan grep/pencarian file biasa lalu baca file yang relevan.
 - Ekstraksi semantik docs/PDF/gambar memakai token model: tanya user dulu.
 
 ## 6. Bila aturan bertabrakan
