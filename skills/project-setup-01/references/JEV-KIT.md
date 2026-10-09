@@ -102,6 +102,46 @@ Untuk TypeScript/JS bentuk JSON-nya sama: `fetch` + validasi respons dengan Zod.
 - **Chunk filter:** dokumen panjang dipotong (2000 karakter, overlap 20%), lalu Jev menilai relevansi tiap chunk dan hanya chunk relevan yang masuk konteks agent.
 - **Benchmark yang dipublikasikan:** per kasus × per arm dicatat jawaban, token, biaya, waktu, dan skor kualitas. Ringkasan disajikan sebagai tabel (payload token, total token, detik, biaya/kasus, kualitas, bersumber). Mentor menyajikan hasil dengan cara ini; tiru formatnya di pitch.
 
+### Tiga diagram webctl → pipeline context graph CS/Sales
+
+Struktur yang sama dipakai untuk data sales. Webctl memfilter di read time; kita memakainya di **write time** (saat data masuk) dan di **query time**.
+
+```
+1. KOMPILASI (write time) — mirip "filter chunks"
+   transkrip call / email
+        │  potong per giliran bicara atau ±2000 karakter (overlap 20%)
+        ▼
+   Jev, 1 batch request per dokumen, banyak pertanyaan per chunk:
+     noul  "chunk ini berisi keputusan / komitmen / keberatan?"
+     score "tipe: harga · fitur · jadwal · kompetitor · risiko churn" (criteria bertingkat)
+     score "seberapa penting untuk deal ini?" (0–3)
+        │  ✂ chunk tak relevan tidak disimpan
+        ▼
+   node Decision / Objection / Commitment + kutipan + call_id + confidence → graph
+
+2. PENYATUAN ENTITAS — mirip "deduplicate"
+   nama perusahaan/kontak dari banyak call
+        │  tahap 1 (gratis): normalisasi nama + domain email → yang identik digabung
+        ▼
+   tahap 2 (murah): kemiripan string/MinHash → beberapa pasangan kandidat
+        ▼
+   Jev 1 batch: noul "apakah A dan B entitas yang sama?" per pasangan
+        │  ya ≥ ambang → merge (alias disimpan) · ragu → antrian review · tidak → tetap terpisah
+        ▼
+   satu node Account/Contact, terhubung ke semua call & opportunity
+
+3. MENJAWAB (query time) — mirip "filter search results"
+   pertanyaan user → traversal graph (account → opportunity → semua call terkait)
+        ▼
+   kandidat chunk dari graph (bukan dari seluruh corpus)
+        ▼
+   Jev batch: score "chunk ini membantu menjawab pertanyaan?" → ambil di atas ambang
+        ▼
+   3–6 chunk + jalur bukti → LLM generatif menyusun jawaban
+```
+
+Yang dibuktikan di benchmark: jalur 3 menemukan **kedua** call untuk pertanyaan multi-call, karena graph sudah menautkannya lewat opportunity di jalur 1–2. RAG biasa harus menebak dari kemiripan teks saja.
+
 ## 3. Benchmark CS/Sales: SalesTranscriptQA (utama)
 
 Dataset buatan mentor sendiri, dari transkrip call sales CRMArena-Pro (Salesforce, sintetis).
