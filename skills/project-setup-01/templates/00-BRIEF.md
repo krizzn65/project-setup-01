@@ -24,7 +24,7 @@
 
 ## 3b. Referensi Panitia
 - **Video Jev** (Diogo Almeida, TypeSafe — youtu.be/cFx9Z3ZXca0): {{3–5 poin paling relevan dengan study case, dari `docs/JEV-LENS.md`}}
-- **Arahan TM 9 Okt 2026:** dinilai dari pemakaian decision model (Jev) di stack + akurasi & biaya menjawab pertanyaan + kegunaan bagi agent; ide seleksi boleh tetap dibangun; dataset saran: EnronQA, CRMArena-Pro (`docs/JEV-LENS.md` §0)
+- **Arahan TM 9 Okt 2026:** dinilai dari pemakaian decision model (Jev) di stack + akurasi & biaya menjawab pertanyaan + kegunaan bagi agent; ide seleksi boleh tetap dibangun; dataset saran: SalesTranscriptQA (utama), EnronQA (`docs/JEV-LENS.md` §0, `docs/JEV-KIT.md`)
 - **Akun Jev/TypeSafe:** {{sudah daftar ($5 kredit) / belum}} · tambahan kredit: hubungi mentor di chat grup
 - {{Referensi lain dari panitia}}
 

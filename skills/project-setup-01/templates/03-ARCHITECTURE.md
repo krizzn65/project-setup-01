@@ -65,11 +65,11 @@
 | {{Dua entitas sama?}} | boolean + p | {{`{a, b}`}} | {{`{same, p}`}} | {{...}} | {{...}} |
 | {{Risiko churn / kemiripan preseden}} | score | {{...}} | {{0–1}} | {{...}} | {{...}} |
 
-- **Penyedia:** Jev (quickstart resmi: {{URL}}); fallback bila down: {{LLM + structured output / cache}}
+- **Penyedia:** Jev `POST https://api.typesafe.ai/v1/systemone`, model `jev-latest` (klien: `docs/JEV-KIT.md` §1); fallback bila down: {{LLM + structured output / cache}}
 - **Paralel & cache:** {{batas konkurensi; cache hasil untuk demo}}
 - **Ambang disimpan di:** {{file config / tabel pengaturan per tim}} — bukan di prompt
 - **Versi dikunci:** model `{{nama@versi}}`, prompt `{{v1}}`; dicatat di provenance (`extracted_by`)
-- **Benchmark:** dataset {{EnronQA / CRMArena-Pro / panitia}} ({{n}} pertanyaan, lisensi {{...}}); baseline {{agent + grep}}; penilai Jev (bukan LLM-as-judge); metrik akurasi, biaya, latensi per pertanyaan
+- **Benchmark:** dataset {{SalesTranscriptQA B2B multi-call / EnronQA / panitia}} ({{n}} pertanyaan, lisensi {{...}}); baseline {{agent + grep}}; penilai Jev (bukan LLM-as-judge); metrik akurasi, biaya, latensi per pertanyaan
 - **Eval primitif:** {{n}} contoh berlabel di `{{path}}`; target akurasi {{...}}; uji robustness: {{urutan field/pertanyaan diubah → hasil sama}}
 - **Biaya & latensi:** {{panggilan, token, ms per dokumen; cascade model kecil → besar}}
 
@@ -81,7 +81,7 @@
 **Mode pembanding RAG:** {{pertanyaan yang sama dijawab dengan vector search biasa atas dokumen yang sama, ditampilkan berdampingan}}
 
 ## 6. Data
-- **Sumber:** {{dataset panitia / EnronQA / CRMArena-Pro / seed sintetis}} · lisensi: {{...}}
+- **Sumber:** {{dataset panitia / SalesTranscriptQA / EnronQA / seed sintetis}} · lisensi: {{...}}
 - **Seed sintetis:** {{jumlah entitas, skenario yang ditanam agar demo bercerita}} — berisi teks mentah, nama entitas yang tidak konsisten, dan beberapa keputusan masa lalu (untuk preseden). Disebut terbuka sebagai data sintetis saat pitch.
 
 ## 7. Rencana Build

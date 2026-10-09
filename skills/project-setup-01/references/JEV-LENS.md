@@ -4,7 +4,7 @@ Sumber: Latent Space, "Why I couldn't build Jev at OpenAI — Diogo Almeida, Typ
 
 ## 0. Arahan mentor di Technical Meeting (9 Okt 2026) — prioritas tertinggi
 
-Mentor Track 3 adalah CTO sebuah perusahaan yang membangun context graph untuk enterprise dan sudah memakai TypeSafe di produksi. Bagian ini ringkasan transkrip TM (nama diri hasil transkripsi otomatis, cek ejaannya). Bila bertentangan dengan bagian lain, **bagian ini yang menang**, kecuali panitia memberi aturan tertulis yang berbeda.
+Mentor Track 3 adalah **Kyle Wild** (CTO Endgame Labs, GitHub `dorkitude`), yang membangun context graph untuk enterprise dan sudah memakai TypeSafe di produksi. Link, kode, dan dataset yang ia bagikan setelah TM dirangkum di `JEV-KIT.md` (API persis, klien, pola, benchmark). Bagian ini ringkasan transkrip TM (nama diri hasil transkripsi otomatis, cek ejaannya). Bila bertentangan dengan bagian lain, **bagian ini yang menang**, kecuali panitia memberi aturan tertulis yang berbeda.
 
 **Penilaian (paling penting)**
 - Panitia dan mentor sepakat: tim boleh membangun **ide yang diajukan saat seleksi** ("you should probably still build it"), tetapi dinilai dari **seberapa baik memakai decision model (Jev) sebagai bagian dari stack**.
@@ -12,12 +12,13 @@ Mentor Track 3 adalah CTO sebuah perusahaan yang membangun context graph untuk e
 - Hasil yang diukur: **seberapa akurat** dan **seberapa murah** sistem menjawab pertanyaan, dan **seberapa berguna** bagi agent akhir saat user bertanya.
 - Context graph dipakai bila ide memang punya tempat untuknya ("please do include some of these things").
 
-**Jev API (cek quickstart resmi di hari H, jangan menebak)**
+**Jev API** (detail persis di `JEV-KIT.md` §1; tetap cocokkan dengan quickstart resmi)
 - Request = **state** (teks bebas, maksimal ±32.000 token; sengaja kirim yang kecil) + **questions**.
-- Tipe output selalu valid (makanya disebut *type safe*):
-  - **boolean**,
-  - **choice** (selalu salah satu dari N pilihan),
-  - **score/probabilitas** (selalu desimal dalam rentang).
+- Tipe output selalu valid (makanya disebut *type safe*). Yang terkonfirmasi di kode mentor:
+  - **`noul`**: ya/tidak → P(ya). Di TM terdengar seperti "dual".
+  - **`score`**: criteria berurutan dari rendah ke tinggi → skor harapan + confidence + probabilitas per level.
+  
+  "Choice" disebut di TM; cek apakah ada sebagai tipe sendiri di quickstart. Kalau tidak ada, pakai `score` dengan criteria bertingkat.
 - Hasilnya tervalidasi tipe (Python / Zod di JS).
 - Latensi di bawah 100 ms. Sekitar 1000× lebih murah dari model frontier untuk tugas seperti ini. Sangat konsisten: urutan state atau pertanyaan diubah dan dijalankan 100×, variansnya di bawah 0,1%.
 - Daftar dapat kredit gratis $5. Menurut mentor itu cukup untuk berhari-hari eksperimen. Kalau habis, kemungkinan ada bug (mis. loop tak berhenti). Kalau memang sah kehabisan, perusahaan mentor bisa menambah kredit; hubungi di chat grup.
@@ -39,8 +40,10 @@ Mentor Track 3 adalah CTO sebuah perusahaan yang membangun context graph untuk e
 **Data & test bed yang disarankan (cek lisensi)**
 - **Enron email** (publik, data email perusahaan asli, ada di Hugging Face).
 - **EnronQA** (Michael Ryan, Stanford): pasangan pertanyaan + jawaban emas di atas email Enron. Untuk benchmark RAG vs context graph.
-- **CRMArena-Pro** (Salesforce; transkripsi menyebut "CRM … Pro"): data CRM sintetis berisi perusahaan, kontak, deal, email, dan transkrip call. Paling dekat dengan CS/Sales.
+- **CRMArena-Pro** (Salesforce, arXiv 2505.18878): data CRM sintetis berisi perusahaan, kontak, deal, email, dan transkrip call.
+- **SalesTranscriptQA** (dataset mentor, dibangun di atas CRMArena-Pro): 10.829 transkrip call + 2.962 QA, termasuk 428 pertanyaan multi-call. **Paling cocok untuk CS/Sales** (lihat `JEV-KIT.md` §3).
 - Lisensi: idealnya MIT/Apache. Creative Commons non-komersial boleh untuk hackathon (akademik), tidak untuk bisnis. Sebutkan lisensinya di pitch.
+- **Baseline:** angka resmi Hybrid RAG di SalesTranscriptQA = 87,5% overall, tetapi **63,3% untuk multi-call** (`JEV-KIT.md` §3).
 - **Baseline naif** dari mentor: chat agent dengan satu tool `grep` membaca email untuk menjawab pertanyaan. Masukkan semua pertanyaan, kumpulkan jawabannya, lalu nilai (pakai Jev). Context graph harus mengalahkan baseline ini di **akurasi dan biaya per pertanyaan**.
 
 **Lain-lain**
@@ -117,7 +120,7 @@ Agent sekarang terkunci di satu model, dan konteksnya hanya bisa terus ditambah.
 3. **Ambang bisa diatur per tim atau per tipe keputusan.** Contohnya, diskon > 20% selalu butuh approval. Ini menjawab kritik "pretty please" pada system prompt.
 4. **Eval dua lapis:**
    - (a) Akurasi per primitif di 20–50 contoh berlabel.
-   - (b) **Benchmark tanya-jawab** dari dataset dengan jawaban emas (EnronQA / CRMArena-Pro, lihat §0): baseline agent+`grep` vs context graph, diukur **akurasi** dan **biaya + latensi per pertanyaan**, dinilai oleh Jev.
+   - (b) **Benchmark tanya-jawab** dari dataset dengan jawaban emas (SalesTranscriptQA B2B multi-call atau EnronQA, lihat §0 dan `JEV-KIT.md` §3): baseline agent+`grep` vs context graph, diukur **akurasi** dan **biaya + latensi per pertanyaan**, dinilai oleh Jev.
    
    Angka ini adalah inti pitch.
 4b. **Kompilasi di write time:** setiap dokumen baru diklasifikasi dan diberi tag oleh Jev (rubrik skor per properti) lalu disimpan ke graph. Query tidak perlu model besar membaca ulang data mentah.

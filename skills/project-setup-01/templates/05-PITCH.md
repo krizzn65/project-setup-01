@@ -24,6 +24,8 @@
 | Baseline (agent + grep/RAG) | {{...}} | {{...}} | {{...}} |
 | Context graph + Jev | {{...}} | {{...}} | {{...}} |
 
+Konteks publik (SalesTranscriptQA, judge berbeda): Hybrid RAG 87,5% overall / 63,3% multi-call; + reranker 96,3% / 81,3%. Sebutkan bahwa judge-nya berbeda.
+
 **Cadangan:** video rekaman {{path/link}} · data/cache demo {{...}}
 
 ## 3. Outline Deck
