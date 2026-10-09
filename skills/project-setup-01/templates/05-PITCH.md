@@ -18,6 +18,12 @@
 |---|---|---|
 | 1 | {{...}} | {{...}} |
 
+**Tabel benchmark (wajib tampil):**
+| | Akurasi | Biaya / pertanyaan | Latensi |
+|---|---|---|---|
+| Baseline (agent + grep/RAG) | {{...}} | {{...}} | {{...}} |
+| Context graph + Jev | {{...}} | {{...}} | {{...}} |
+
 **Cadangan:** video rekaman {{path/link}} · data/cache demo {{...}}
 
 ## 3. Outline Deck

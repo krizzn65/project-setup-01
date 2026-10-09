@@ -2,6 +2,51 @@
 
 Sumber: Latent Space, "Why I couldn't build Jev at OpenAI — Diogo Almeida, TypeSafe Co-founder & CEO" (youtu.be/cFx9Z3ZXca0, 2:22). Panitia Track 3 meminta semua peserta menyimak video ini, jadi juri kemungkinan menilai apakah tim memahami cara berpikirnya. File ini berisi pemahamannya dan cara menerapkannya ke context graph CS/Sales. Ini ringkasan dengan kata-kata sendiri, bukan transkrip.
 
+## 0. Arahan mentor di Technical Meeting (9 Okt 2026) — prioritas tertinggi
+
+Mentor Track 3 adalah CTO sebuah perusahaan yang membangun context graph untuk enterprise dan sudah memakai TypeSafe di produksi. Bagian ini ringkasan transkrip TM (nama diri hasil transkripsi otomatis, cek ejaannya). Bila bertentangan dengan bagian lain, **bagian ini yang menang**, kecuali panitia memberi aturan tertulis yang berbeda.
+
+**Penilaian (paling penting)**
+- Panitia dan mentor sepakat: tim boleh membangun **ide yang diajukan saat seleksi** ("you should probably still build it"), tetapi dinilai dari **seberapa baik memakai decision model (Jev) sebagai bagian dari stack**.
+- Yang dievaluasi: "apa yang bisa kulakukan pada **input fuzzy** memakai AI untuk **kembali ke control flow di kode nyata**". Cari titik di sistem yang butuh *keputusan fuzzy*, dan taruh Jev di sana.
+- Hasil yang diukur: **seberapa akurat** dan **seberapa murah** sistem menjawab pertanyaan, dan **seberapa berguna** bagi agent akhir saat user bertanya.
+- Context graph dipakai bila ide memang punya tempat untuknya ("please do include some of these things").
+
+**Jev API (cek quickstart resmi di hari H, jangan menebak)**
+- Request = **state** (teks bebas, maksimal ±32.000 token; sengaja kirim yang kecil) + **questions**.
+- Tipe output selalu valid (makanya disebut *type safe*):
+  - **boolean**,
+  - **choice** (selalu salah satu dari N pilihan),
+  - **score/probabilitas** (selalu desimal dalam rentang).
+- Hasilnya tervalidasi tipe (Python / Zod di JS).
+- Latensi di bawah 100 ms. Sekitar 1000× lebih murah dari model frontier untuk tugas seperti ini. Sangat konsisten: urutan state atau pertanyaan diubah dan dijalankan 100×, variansnya di bawah 0,1%.
+- Daftar dapat kredit gratis $5. Menurut mentor itu cukup untuk berhari-hari eksperimen. Kalau habis, kemungkinan ada bug (mis. loop tak berhenti). Kalau memang sah kehabisan, perusahaan mentor bisa menambah kredit; hubungi di chat grup.
+- Cara mentor belajar API baru: tempel URL quickstart ke coding agent, lalu suruh terus mencoba sampai hasilnya bagus.
+- Kompetitor yang disebut: OpenAI "Decision API" (±2× lebih mahal, sedikit kurang konsisten) dan satu model dari Cloudflare.
+
+**Cara pakai yang benar menurut mentor**
+- **Jangan** menyuruh Jev mengambil keputusan langsung ("email ini berguna?").
+- **Lakukan** klasifikasi dengan **rubrik**: mis. 15 properti email, masing-masing diberi skor 0–100. Lalu **kode** yang memutuskan berdasarkan angka itu.
+- Prinsipnya: semua yang bisa deterministik dibuat deterministik. Control flow (`if`) tetap di kode; hanya isi kondisinya yang fuzzy.
+- **Semua eval memakai Jev, bukan LLM-as-judge.** Judge LLM tidak konsisten (eval yang sama dijalankan ulang memberi skor berbeda) dan mahal.
+- Contoh repo mentor ("smart web search"): setiap hasil search + goal dikirim ke Jev, "perlu diberikan ke agent atau tidak?" Hemat ±80% token. Hal yang sama untuk hasil `grep` coding agent.
+
+**Definisi context graph menurut mentor**
+- RAG / search = kerja di **read time**: data dicari dan dirangkai saat pertanyaan datang. Mahal, karena model besar membaca data berantakan setiap kali.
+- Context graph = kerja di **write time**: setiap data baru masuk (atau saat snapshot), data **dikompilasi ke bentuk yang lebih berguna** — diklasifikasi, diberi tag, sebagian di-generate, ditambah semantic search. Bentuknya disesuaikan untuk melayani chat agent, bukan skema database lama. Biaya AI dikeluarkan sekali di depan, lalu **semua query jadi lebih murah**.
+- Jev cocok untuk kompilasi ini: klasifikasi dan tagging massal yang murah dan konsisten.
+
+**Data & test bed yang disarankan (cek lisensi)**
+- **Enron email** (publik, data email perusahaan asli, ada di Hugging Face).
+- **EnronQA** (Michael Ryan, Stanford): pasangan pertanyaan + jawaban emas di atas email Enron. Untuk benchmark RAG vs context graph.
+- **CRMArena-Pro** (Salesforce; transkripsi menyebut "CRM … Pro"): data CRM sintetis berisi perusahaan, kontak, deal, email, dan transkrip call. Paling dekat dengan CS/Sales.
+- Lisensi: idealnya MIT/Apache. Creative Commons non-komersial boleh untuk hackathon (akademik), tidak untuk bisnis. Sebutkan lisensinya di pitch.
+- **Baseline naif** dari mentor: chat agent dengan satu tool `grep` membaca email untuk menjawab pertanyaan. Masukkan semua pertanyaan, kumpulkan jawabannya, lalu nilai (pakai Jev). Context graph harus mengalahkan baseline ini di **akurasi dan biaya per pertanyaan**.
+
+**Lain-lain**
+- Tim maksimal 3 orang.
+- Opini mentor: coding agent lebih andal di bahasa yang stabil seperti Go, karena data latih JS/TS penuh info kontradiktif antar versi. Tempel docs modern ke agent. Ini opini, bukan aturan; tetap pilih stack yang dikuasai tim.
+
 ## 1. Tesis inti
 
 - **Di masa depan, AI paling banyak dipanggil oleh kode, bukan oleh manusia yang chatting.** Diogo bertanya: kalau AI memicu revolusi ekonomi, siapa yang memanggil API-nya? Jawabannya program, dengan selisih "banyak angka sembilan". Padahal hampir semua optimasi model diarahkan ke chat dengan manusia.
@@ -70,13 +115,18 @@ Agent sekarang terkunci di satu model, dan konteksnya hanya bisa terus ditambah.
    
    Ini sama dengan alur "agent bertindak, manusia menyetujui", dan keputusan manusia ditulis balik sebagai `Decision`.
 3. **Ambang bisa diatur per tim atau per tipe keputusan.** Contohnya, diskon > 20% selalu butuh approval. Ini menjawab kritik "pretty please" pada system prompt.
-4. **Eval set kecil sendiri** (20–50 contoh berlabel dari seed data). Tampilkan akurasi per primitif dan contoh robustness (input diubah sedikit, hasil tetap). Angka ini bisa dipakai di pitch.
+4. **Eval dua lapis:**
+   - (a) Akurasi per primitif di 20–50 contoh berlabel.
+   - (b) **Benchmark tanya-jawab** dari dataset dengan jawaban emas (EnronQA / CRMArena-Pro, lihat §0): baseline agent+`grep` vs context graph, diukur **akurasi** dan **biaya + latensi per pertanyaan**, dinilai oleh Jev.
+   
+   Angka ini adalah inti pitch.
+4b. **Kompilasi di write time:** setiap dokumen baru diklasifikasi dan diberi tag oleh Jev (rubrik skor per properti) lalu disimpan ke graph. Query tidak perlu model besar membaca ulang data mentah.
 5. **Biaya dan latensi terlihat:** jumlah panggilan, token, dan ms per dokumen. Tunjukkan cascade: model kecil dulu, model besar hanya untuk kasus ragu.
 6. **Versi model dan prompt dikunci** di config, lalu dicatat di provenance (`extracted_by: model@versi`).
 
 ## 8. Implementasi dengan LLM apa pun (tanpa harus memakai Jev)
 
-Kalau panitia atau sponsor menyediakan akses Jev/TypeSafe, pakai dan ikuti dokumentasinya. Kalau tidak, pola yang sama bisa dibuat dengan LLM lain:
+**Default hari H: pakai Jev** (penilaian berdasarkan pemakaian decision model; kredit $5 dari pendaftaran). Ikuti quickstart resminya. Pola cadangan di bawah hanya untuk fallback kalau API Jev down, atau untuk bagian generatif (jawaban chat) yang memang butuh LLM biasa:
 - **Structured output / JSON schema** untuk choice dan score (enum dan angka dibatasi skema).
 - **Probabilitas:**
   - Pakai `logprobs` token jawaban kalau API menyediakannya.
@@ -89,4 +139,5 @@ Kalau panitia atau sponsor menyediakan akses Jev/TypeSafe, pakai dan ikuti dokum
 
 - "Kami tidak meminta satu chatbot menebak semuanya. Kami memecah pekerjaan CSM jadi ratusan keputusan kecil yang bisa diukur, dan setiap keputusan punya confidence dan bukti."
 - "Yang yakin langsung masuk ke graph. Yang ragu masuk ke manusia. Keputusan manusia ikut tersimpan, jadi sistemnya makin tahu kenapa sesuatu diputuskan."
+- "RAG membayar mahal di setiap pertanyaan. Kami membayar sekali saat data masuk: Jev mengklasifikasi dan memberi tag, lalu setiap pertanyaan jadi lebih murah dan lebih akurat. Ini angkanya: akurasi {{x}}% vs {{y}}%, biaya per pertanyaan {{a}} vs {{b}}."
 - "Context graph adalah memori terstruktur untuk AI. Konteks tidak ditumpuk sebagai teks, tapi bisa dicari, ditelusuri, dan dibuktikan."

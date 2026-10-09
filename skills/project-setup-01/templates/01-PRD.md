@@ -15,7 +15,7 @@
 | 5 | Alternatif & pembeda | {{kompetitor/cara lama dan kelemahannya}} |
 | 6 | Relative costs | {{biaya rendah / nilai unik}} |
 | 7 | Trade-off | {{yang sengaja tidak dikerjakan}} |
-| 8 | Key metrics | North Star: {{...}} · dibuktikan di demo: {{...}} |
+| 8 | Key metrics | North Star: {{...}} · dibuktikan di demo: {{...}} · benchmark: akurasi & biaya per pertanyaan vs baseline |
 | 9 | Growth / GTM | {{PLG/SLG, channel, pembeli vs pengguna}} |
 | 10 | Capabilities | {{bangun sendiri vs partner/API; LLM sebagai primitif (choice/boolean+p/score) dengan ambang yang diatur tim}} |
 | 11 | Can't/Won't | {{kenapa pemain besar tidak bisa/mau meniru}} |
@@ -31,13 +31,18 @@
 | H1 | {{...}} | {{...}} |
 
 ## 5. Golden Demo Path
-1. {{Data mentah → graph terbentuk}}
+1. {{Data mentah → Jev klasifikasi/tag di write time → graph terbentuk}}
 2. {{Pertanyaan dari study case → jawaban agent + jalur bukti di graph}}
-3. {{Pembanding: pertanyaan sama dijawab RAG biasa → gagal/tanpa bukti}}
+3. {{Pembanding: pertanyaan sama dijawab baseline agent + grep/RAG → tabel akurasi & biaya per pertanyaan}}
 4. {{Agent mengusulkan aksi + preseden keputusan serupa → user menyetujui}}
 5. {{Keputusan tersimpan di graph → dipakai di pertanyaan berikutnya}}
 
 **Momen wow:** {{...}}
+
+## 5a. Titik Keputusan Fuzzy (Jev)
+| Keputusan fuzzy | Rubrik / pertanyaan ke Jev (tipe) | Kode yang memutuskan |
+|---|---|---|
+| {{mis. email ini sinyal churn?}} | {{5 properti skor 0–100 / boolean / choice}} | {{if skor_rata > 70 → tandai berisiko}} |
 
 ## 5b. Daftar Layar
 > Satu layar, satu tugas. Menu navigasi hanya berisi layar di tabel ini.

@@ -7,7 +7,8 @@
 |---|---|---|
 | Bahasa & framework | {{...}} | {{...}} |
 | Graph store | {{...}} | {{...}} |
-| LLM / embedding | {{...}} | {{...}} |
+| Decision model | Jev (TypeSafe) | {{arahan TM: dinilai dari pemakaiannya}} |
+| LLM generatif / embedding | {{hanya bila perlu teks bebas}} | {{...}} |
 | UI & visualisasi graph/data | {{...}} | {{...}} |
 | Ikon | {{Lucide / Phosphor — bukan emoji}} | {{...}} |
 | Hosting demo | {{...}} | {{...}} |
@@ -22,7 +23,7 @@
 | Typecheck | `{{...}}` |
 | Lint | `{{...}}` |
 | Dead code | `{{mis. npx knip (JS/TS), vulture (Python)}}` |
-| Eval AI | `{{mis. python eval/run.py → akurasi per primitif}}` |
+| Benchmark | `{{mis. python bench/run.py → akurasi, biaya, latensi per pertanyaan: baseline vs graph}}` |
 | Golden demo path | {{langkah manual / script e2e}} |
 
 ## 3. Skema Context Graph
@@ -50,12 +51,12 @@
 ## 4. Pipeline Data
 1. **Ingest** teks mentah ({{email / transkrip / tiket / catatan}}) dan data terstruktur ({{CSV/CRM}}).
 2. **Ekstraksi** oleh LLM → JSON dengan skema tetap: entitas, relasi, keputusan + kutipan sumber.
-3. **Penyatuan entitas:** normalisasi nama + domain email → LLM sebagai penentu untuk kasus ragu → merge ke node yang sama. Contoh kasus di seed: {{"PT ABC" / "ABC Corp" / "abc.co.id"}}.
+3. **Penyatuan entitas:** normalisasi nama + domain email → Jev (boolean "entitas sama?") untuk kasus ragu → merge ke node yang sama. Contoh kasus di seed: {{"PT ABC" / "ABC Corp" / "abc.co.id"}}.
 4. **Tulis ke graph** dengan provenance + masa berlaku.
 **Cadangan:** seed data versi bersih yang langsung dimuat kalau ekstraksi bermasalah saat demo.
 
 ## 4b. Peta Panggilan AI (lensa Jev)
-> LLM dipanggil oleh kode sebagai primitif kecil yang terkalibrasi, bukan satu prompt raksasa. Pola: `docs/JEV-LENS.md` §7–8.
+> Jev dipanggil oleh kode dengan rubrik (state kecil + questions bertipe), lalu kode yang memutuskan. Kompilasi graph dilakukan di write time. Pola: `docs/JEV-LENS.md` §7–8.
 
 | Titik keputusan | Primitif | Input (JSON) | Output | Ambang: tulis / review / buang | Eskalasi |
 |---|---|---|---|---|---|
@@ -64,11 +65,12 @@
 | {{Dua entitas sama?}} | boolean + p | {{`{a, b}`}} | {{`{same, p}`}} | {{...}} | {{...}} |
 | {{Risiko churn / kemiripan preseden}} | score | {{...}} | {{0–1}} | {{...}} | {{...}} |
 
-- **Sumber probabilitas:** {{logprobs / mayoritas n sampel / self-report [kalibrasi belum diuji]}}
+- **Penyedia:** Jev (quickstart resmi: {{URL}}); fallback bila down: {{LLM + structured output / cache}}
 - **Paralel & cache:** {{batas konkurensi; cache hasil untuk demo}}
 - **Ambang disimpan di:** {{file config / tabel pengaturan per tim}} — bukan di prompt
 - **Versi dikunci:** model `{{nama@versi}}`, prompt `{{v1}}`; dicatat di provenance (`extracted_by`)
-- **Eval set:** {{n}} contoh berlabel di `{{path}}`; target akurasi per primitif {{...}}; uji robustness: {{input diubah sedikit (urutan field, sinonim, nonce) → hasil sama}}
+- **Benchmark:** dataset {{EnronQA / CRMArena-Pro / panitia}} ({{n}} pertanyaan, lisensi {{...}}); baseline {{agent + grep}}; penilai Jev (bukan LLM-as-judge); metrik akurasi, biaya, latensi per pertanyaan
+- **Eval primitif:** {{n}} contoh berlabel di `{{path}}`; target akurasi {{...}}; uji robustness: {{urutan field/pertanyaan diubah → hasil sama}}
 - **Biaya & latensi:** {{panggilan, token, ms per dokumen; cascade model kecil → besar}}
 
 ## 5. Alur Sistem
@@ -79,7 +81,7 @@
 **Mode pembanding RAG:** {{pertanyaan yang sama dijawab dengan vector search biasa atas dokumen yang sama, ditampilkan berdampingan}}
 
 ## 6. Data
-- **Sumber:** {{dataset panitia / seed sintetis}}
+- **Sumber:** {{dataset panitia / EnronQA / CRMArena-Pro / seed sintetis}} · lisensi: {{...}}
 - **Seed sintetis:** {{jumlah entitas, skenario yang ditanam agar demo bercerita}} — berisi teks mentah, nama entitas yang tidak konsisten, dan beberapa keputusan masa lalu (untuk preseden). Disebut terbuka sebagai data sintetis saat pitch.
 
 ## 7. Rencana Build
@@ -94,6 +96,7 @@ Task 30–120 menit, punya pemilik & jam target.
 | Risiko | Cadangan |
 |---|---|
 | LLM/API lambat atau down saat demo | {{cache jawaban demo / video cadangan}} |
+| Kredit Jev habis | {{cek loop/bug dulu; batasi konkurensi; minta top-up ke mentor}} |
 | Ekstraksi/penyatuan entitas tidak akurat | {{seed data bersih + validasi skema JSON + ambang review}} |
 | Model/provider berubah perilaku di tengah lomba | {{versi dikunci + eval set dijalankan ulang sebelum demo}} |
 | {{...}} | {{...}} |
